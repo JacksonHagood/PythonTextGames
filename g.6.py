@@ -27,16 +27,16 @@ correct = 0
 length = 9
 
 # randomizes the board
-for i in range(length):
+for m in range(length):
     board.append([])
-    for j in range(length):
-        board[i].append(letters[random.randint(0, 25)])
+    for n in range(length):
+        board[m].append(letters[random.randint(0, 25)])
 
 # clears taken
-for i in range(length):
+for k in range(length):
     taken.append([])
-    for j in range(length):
-        taken[i].append(' ')
+    for l in range(length):
+        taken[k].append(' ')
 
 
 def checkrow(r):
@@ -60,35 +60,35 @@ def draw():
     print('')
     for i in range(length):
         for j in range(length):
-            print(board[i][j], end =' ')
+            print(board[i][j], end=' ')
         print('')
 
 
 # sets the solutions into the board
-for i in range(25):
+for m in range(25):
     ran = random.randint(0, len(words) - 1)
     word = words[ran].upper()
     words[ran] = '-'
     ran = random.randint(0, length - 1)
-    j = 0
+    n = 0
     # sets according to a row
     if random.randint(0, 1) == 0 and checkrow(ran) and not word == '-':
-        j += random.randint(0, length - len(word) - 1)
+        n += random.randint(0, length - len(word) - 1)
         number += 1
         solutions.append(word)
         for char in word:
-            board[ran][j] = char
-            taken[ran][j] = '-'
-            j += 1
+            board[ran][n] = char
+            taken[ran][n] = '-'
+            n += 1
     # sets according to a column
     elif checkcol(ran) and not word == '-':
-        j += random.randint(0, length - len(word) - 1)
+        n += random.randint(0, length - len(word) - 1)
         number += 1
         solutions.append(word)
         for char in word:
-            board[j][ran] = char
-            taken[j][ran] = '-'
-            j += 1
+            board[n][ran] = char
+            taken[n][ran] = '-'
+            n += 1
 
 # introduction
 print('')
@@ -101,18 +101,18 @@ while True:
     draw()
     guess = input('Your Guess: ').upper()
     if guess in guesses:
-        print('You have already guessed that')
+        print('"' + guess.lower() + '" has already been found')
     elif guess in solutions:
         print('Correct!')
         correct += 1
     else:
-        print(guess, 'is not a solution')
+        print('"' + guess.lower() + '" is not a solution')
     if correct == number:
         print('\nYou Win! :)')
         break
     guesses.append(guess)
 
-print('The answers were: ', end ='')
+print('The answers were: ', end='')
 for i in range(len(solutions) - 1):
     print('"' + solutions[i].lower() + '"', end=', ')
 print('and', '"' + solutions[len(solutions) - 1].lower() + '"')
