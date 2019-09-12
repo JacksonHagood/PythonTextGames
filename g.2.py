@@ -107,4 +107,7 @@ else:
 
 print('-' * 100)
 
+file = open('Board.txt', 'a')
+file.write(input('Enter Your Name: ') + ' Played an Adventure Game\n')
+file.close()
 print('Thanks for Playing!')

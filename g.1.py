@@ -86,6 +86,9 @@ while True:
     if win(filled, 'X'):
         draw(filled)
         print('You Win! :)')
+        file = open('Board.txt', 'a')
+        file.write(input('Enter Your Name: ') + ' Won in TicTacToe\n')
+        file.close()
         break
     elif full(filled):
         draw(filled)

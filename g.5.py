@@ -42,10 +42,13 @@ while True:
 
     if guess == word:
         print('\nYou Win! :)')
+        file = open('Board.txt', 'a')
+        file.write(input('Enter Your Name: ') + ' Won in Scramble\n')
+        file.close()
         break
     elif guess == '' or lives == 0:
         print('\nGame Over! :(')
+        print('The answer was', '"' + word + '"')
         break
 
-print('The answer was', '"' + word + '"')
 print('Thanks for playing!')

@@ -86,6 +86,9 @@ while True:
         print('No Match!')
     if correct == size / 2:
         print('\nYou Win! :)')
+        file = open('Board.txt', 'a')
+        file.write(input('Enter Your Name: ') + ' Won in Matching\n')
+        file.close()
         break
 
 print('Thanks for playing!')

@@ -7,8 +7,10 @@ import random
 
 # set possible solutions and what takes up the board
 # possible solutions must be under 10 characters
-words = ['python', 'float', 'string', 'list', 'set', 'tuple', 'index', 'import',
-         'math', 'random', 'define', 'return', 'print', 'input', 'append', 'hagood']
+words = ['python', 'variable', 'integer', 'float', 'complex', 'string', 'boolean', 'list', 'set',
+         'tuple', 'index', 'iterator', 'import', 'math', 'random', 'function', 'define', 'return',
+         'casting', 'print', 'input', 'append', 'and', 'or', 'not', 'is', 'in', 'jackson', 'hagood',
+         'module']
 
 letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
            'V', 'W', 'X', 'Y', 'Z']
@@ -65,7 +67,7 @@ def draw():
 
 
 # sets the solutions into the board
-for m in range(25):
+for m in range(100):
     ran = random.randint(0, len(words) - 1)
     word = words[ran].upper()
     words[ran] = '-'
@@ -109,11 +111,15 @@ while True:
         print('"' + guess.lower() + '" is not a solution')
     if correct == number:
         print('\nYou Win! :)')
+        print('The answers were: ', end='')
+        for i in range(len(solutions) - 1):
+            print('"' + solutions[i].lower() + '"', end=', ')
+        print('and', '"' + solutions[len(solutions) - 1].lower() + '"')
+
+        file = open('Board.txt', 'a')
+        file.write(input('Enter Your Name: ') + ' Won in Word Search\n')
+        file.close()
         break
     guesses.append(guess)
 
-print('The answers were: ', end='')
-for i in range(len(solutions) - 1):
-    print('"' + solutions[i].lower() + '"', end=', ')
-print('and', '"' + solutions[len(solutions) - 1].lower() + '"')
 print('Thanks for playing!')

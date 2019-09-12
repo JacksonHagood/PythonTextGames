@@ -68,11 +68,14 @@ while True:
 
     if lives == 0:
         print('\nGame Over! :(')
+        print('The answer was', '"' + word + '"')
         break
 
     if answer == solution:
         print('\nYou Win! :)')
+        file = open('Board.txt', 'a')
+        file.write(input('Enter Your Name: ') + ' Won in Hangman\n')
+        file.close()
         break
 
-print('The answer was', '"' + word + '"')
 print('Thanks for playing!')
