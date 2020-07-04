@@ -1,113 +1,104 @@
 # game 2
 
-# full text adventure game
-# section 1 consists of guessing a random number
-# section 2 consists of answering a multiple choice question
-# section 3 consists of naming as many items as possible
+# full text tic tac toe
+# 2 player version
 
-import random
-import sys
+# board numbered 0 - 8, like the indexes
+board = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
 
-# section 1
 
-print('-' * 100)
-# separates sections
+def draw():
+    """draws the current board according to filled slots"""
 
-print('You approach the mysterious gates of PyLand')
-print('A lock running 0 to 100 holds the gates shut')
-print('The lock must be opened within 10 guesses')
+    print('\n+---+---+---+')
+    for i in range(9):
+        print('| ' + board[i] + ' ', end='')
+        if (i + 1) % 3 == 0:
+            print('|\n+---+---+---+')
 
-solution = random.randint(0, 99)
-# assign the solution randomly each time
-count = 0
-# count controls the number of guesses
-answer = 0
 
-while count < 10:
-    # feedback is given in relation to the solution
-    answer = int(input('Your Guess: '))
-    if answer == solution:
-        break
-    elif answer > 100 or answer < 0:
-        break
-    elif answer > solution:
-        print('Your guess was too high')
+def player(s):
+    """runs the players turn by taking input and checking the slot"""
+
+    slot = int(input('\n' + s + "'s move: "))
+    if board[slot] in '012345678':
+        board[slot] = s
     else:
-        print('Your guess was too low')
-    count += 1
+        print('That space is filled!')
 
-if answer == solution:
-    print('The gates open, and you walk into PyLand')
-else:
-    sys.exit('You have failed, and the gates remain shut')
-    # sys.exit will quit the game
 
-# section 2
+def full():
+    """checks if board is full by counting blank slots"""
 
-print('-' * 100)
+    count = 0
+    for slot in board:
+        if slot not in '012345678':
+            count += 1
+    return count == 9
 
-print('As you enter PyLand a man appears in front of you')
-print('The man begins to speak, and asks for your name')
-name = input('Your Name: ')
 
-choices = ['A - Lists', 'B - Sets', 'C - Tuples', 'D - Dictionaries']
-# answer choices are stored in a list
+def win(s):
+    """checks to see if given symbol has won"""
 
-print('Hello', name + ', to move on you must answer this question:')
-print('Of the following, which is immutable?')
-for choice in choices:
-    # list is iterated through
-    print(choice)
+    # check across
+    for i in range(3):
+        if board[0 + 3 * i] == board[1 + 3 * i] == board[2 + 3 * i] == s:
+            board[0 + 3 * i] = board[1 + 3 * i] = board[2 + 3 * i] = '#'
+            return True
 
-answer = input('Your Answer: ').upper()
-# .upper() eliminates the ambiguity in capitalization
+    # check down
+    for i in range(3):
+        if board[i] == board[i + 3] == board[i + 6] == s:
+            board[i] = board[i + 3] = board[i + 6] = '#'
+            return True
 
-if answer == 'C':
-    print('Correct! You have learned well and may go on')
-else:
-    sys.exit('You have failed, and the man exiles you')
+    # check diagonal right
+    if board[0] == board[4] == board[8] == s:
+        board[0] = board[4] = board[8] = '#'
+        return True
 
-# section 3
+    # check diagonal left
+    if board[6] == board[4] == board[2] == s:
+        board[6] = board[4] = board[2] = '#'
+        return True
 
-print('-' * 100)
+    return False
 
-answers = []
-# answers stored as a list
-count = 0
 
-print('Finally a voice calls to you', name)
-print('The voice asks you to name as many data types as you can')
+# introduction
+print('\nWelcome to Tic Tac Toe!'
+      '\n2 player version, X & O'
+      '\nBoard is numbered 0 - 8')
 
+# run through the game
 while True:
-    answer = input('Data Type: ').upper()
-    if answer == '':
+    # draw board and run player turn
+    draw()
+    player('X')
+
+    # check board and output accordingly
+    if win('X'):
+        draw()
+        print('\nPlayer X Wins')
         break
-        # pressing enter exits the input
-    answers.append(answer)
+    elif full():
+        draw()
+        print('\nTie')
+        break
 
-for guess in answers:
-    if guess in 'INTEGER FLOAT COMPLEX STRING BOOLEAN LIST SET TUPLE DICTIONARY':
-        count += 1
+    # run cpu turn
+    draw()
+    player('O')
 
-# depending on the amount guessed, an ability will be printed
-if count < 1:
-    sys.exit('You have failed, and the voice exiles you')
-elif count < 3:
-    print('You are beginner in Python')
-elif count < 5:
-    print('You are intermediate in Python')
-elif count < 7:
-    print('You are advanced in Python')
-elif count < 9:
-    print('You are professional in Python')
-else:
-    print('You are perfect in Python!')
+    # check board and output accordingly
+    if win('O'):
+        draw()
+        print('\nPlayer O Wins')
+        break
+    elif full():
+        draw()
+        print('\nTie')
+        break
 
-# end
-
-print('-' * 100)
-
-file = open('Board.txt', 'a')
-file.write(input('Enter Your Name: ') + ' Played an Adventure Game\n')
-file.close()
-print('Thanks for Playing!')
+# closing statement
+print('Thanks for playing!')

@@ -3,8 +3,9 @@
 # full text sticks
 # ai is completely random
 
-import random
+from random import randint
 
+# store player hands each as lists
 plaL = ['|', ' ', ' ', ' ', ' ']
 plaR = ['|', ' ', ' ', ' ', ' ']
 cpuL = ['|', ' ', ' ', ' ', ' ']
@@ -12,32 +13,38 @@ cpuR = ['|', ' ', ' ', ' ', ' ']
 
 
 def draw(pl, pr, cl, cr):
-    # draws the current board according to filled slots
-    print('CPU'.center(25, '-'))
+    """draws the current board according to filled slots"""
+
+    # draw the cpu's hands
+    print('\n' + 'CPU'.center(25, '-'))
     for i in range(1, 6):
         print(cl[-i], end=' ')
     print(' ' * 5, end='')
     for i in cr:
         print(i, end=' ')
+
     print('\n')
+
+    # draw the player's hands
     for i in range(1, 6):
         print(pl[-i], end=' ')
     print(' ' * 5, end='')
     for i in pr:
         print(i, end=' ')
-    print('')
-    print('Player'.center(25, '-'))
+    print('\n' + 'Player'.center(25, '-'))
 
 
 def check(h):
-    # returns true if given hand empty
+    """returns true if given hand empty"""
+
     if '|' not in h:
         return True
     return False
 
 
 def move(fr, to):
-    # executes a move
+    """executes a move"""
+
     count = (fr.count('|') + to.count('|')) % 5
     for i in range(5):
         to[i] = ' '
@@ -47,21 +54,18 @@ def move(fr, to):
 
 
 # introduction
-print('')
-print('Welcome to Sticks!')
-print('You can pick a hand or split')
-print('Pick a player and cpu hand')
-print("'l' for left")
-print("'r' for left")
-print('')
+print('\nWelcome to Sticks!'
+      '\nYou can pick a hand or split'
+      '\nPick a player and cpu hand'
+      "\n'l' for left"
+      "\n'r' for left")
 
+# run through the game
 while True:
+    # draw the board and run the player turn
     draw(plaL, plaR, cpuL, cpuR)
-
-    loc = input('Your Move: ').upper()
+    loc = input('\nYour Move: ').upper()
     des = input('Their Hand: ').upper()
-    print('')
-
     if loc == 'L' and des == 'L':
         cpuL = move(plaL, cpuL)
     elif loc == 'L' and des == 'R':
@@ -71,16 +75,17 @@ while True:
     elif loc == 'R' and des == 'R':
         cpuR = move(plaR, cpuR)
 
+    # check for a win and output accordingly
     if check(cpuL) and check(cpuR):
-        print('You Win! :)')
+        print('\nYou Win! :)')
         file = open('Board.txt', 'a')
         file.write(input('Enter Your Name: ') + ' Won in Sticks\n')
         file.close()
         break
 
-    loc = random.randint(0, 1)
-    des = random.randint(0, 1)
-
+    # run the cpu turn
+    loc = randint(0, 1)
+    des = randint(0, 1)
     if loc == 0 and des == 0:
         plaL = move(cpuL, plaL)
     elif loc == 0 and des == 1:
@@ -90,8 +95,10 @@ while True:
     elif loc == 1 and des == 1:
         plaR = move(cpuR, plaR)
 
+    # check for a loss and output accordingly
     if check(plaL) and check(plaR):
-        print('Game Over! :(')
+        print('\nGame Over! :(')
         break
 
+# closing statement
 print('Thanks for playing!')

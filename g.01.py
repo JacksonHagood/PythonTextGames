@@ -3,106 +3,116 @@
 # full text tic tac toe
 # ai is completely random
 
-import random
+from random import randint
 
-filled = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-
-
-def draw(board):
-    # draws the current board according to filled slots
-    print('')
-    print('-' * 15)
-    print('|    ' + board[0] + '|' + board[1] + '|' + board[2] + '    |')
-    print('|    ' + '-' * 5 + '    |')
-    print('|    ' + board[3] + '|' + board[4] + '|' + board[5] + '    |')
-    print('|    ' + '-' * 5 + '    |')
-    print('|    ' + board[6] + '|' + board[7] + '|' + board[8] + '    |')
-    print('-' * 15)
-    print('')
+# board numbered 0 - 8, like the indexes
+board = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
 
 
-def check(board, slot):
-    # checks if slot is blank
-    return board[slot] == ' '
+def draw():
+    """draws the current board according to filled slots"""
+
+    print('\n+---+---+---+')
+    for i in range(9):
+        print('| ' + board[i] + ' ', end='')
+        if (i + 1) % 3 == 0:
+            print('|\n+---+---+---+')
 
 
 def player():
-    # runs the players turn
-    slot = int(input('Your move: '))
-    if check(filled, slot):
-        filled[slot] = 'X'
+    """runs the players turn by taking input and checking the slot"""
+
+    slot = int(input('\nYour move: '))
+    if board[slot] in '012345678':
+        board[slot] = 'X'
     else:
         print('That space is filled!')
 
 
 def cpu():
-    # runs the cpu turn
+    """runs the cpu turn by generating slots until a blank one is found"""
+
     while True:
-        slot = random.randint(0, 8)
-        if check(filled, slot):
-            filled[slot] = 'O'
+        slot = randint(0, 8)
+        if board[slot] in '012345678':
+            board[slot] = 'O'
             break
 
 
-def full(board):
-    # checks if board is full
+def full():
+    """checks if board is full by counting blank slots"""
+
     count = 0
     for slot in board:
-        if slot != ' ':
+        if slot not in '012345678':
             count += 1
     return count == 9
 
 
-def win(b, s):
-    # checks to see if given symbol has won
-    return ((b[0] == s and b[1] == s and b[2] == s) or
-            (b[3] == s and b[4] == s and b[5] == s) or
-            (b[6] == s and b[7] == s and b[8] == s) or
-            (b[0] == s and b[3] == s and b[6] == s) or
-            (b[1] == s and b[4] == s and b[7] == s) or
-            (b[2] == s and b[5] == s and b[8] == s) or
-            (b[0] == s and b[4] == s and b[8] == s) or
-            (b[6] == s and b[4] == s and b[2] == s))
+def win(s):
+    """checks to see if given symbol has won"""
+
+    # check across
+    for i in range(3):
+        if board[0 + 3 * i] == board[1 + 3 * i] == board[2 + 3 * i] == s:
+            board[0 + 3 * i] = board[1 + 3 * i] = board[2 + 3 * i] = '#'
+            return True
+
+    # check down
+    for i in range(3):
+        if board[i] == board[i + 3] == board[i + 6] == s:
+            board[i] = board[i + 3] = board[i + 6] = '#'
+            return True
+
+    # check diagonal right
+    if board[0] == board[4] == board[8] == s:
+        board[0] = board[4] = board[8] = '#'
+        return True
+
+    # check diagonal left
+    if board[6] == board[4] == board[2] == s:
+        board[6] = board[4] = board[2] = '#'
+        return True
+
+    return False
 
 
 # introduction
-print('')
-print('Welcome to Tic Tac Toe!')
-print('You are X, the CPU is O')
-print('The board is numbered as:')
-print('')
-print('-' * 15)
-print('|    0|1|2    |')
-print('|    ' + '-' * 5 + '    |')
-print('|    3|4|5    |')
-print('|    ' + '-' * 5 + '    |')
-print('|    6|7|8    |')
-print('-' * 15)
-print('')
+print('\nWelcome to Tic Tac Toe!'
+      '\nYou are X, the CPU is O'
+      '\nBoard is numbered 0 - 8')
 
+# run through the game
 while True:
-    # runs through the game
+    # draw board and run player turn
+    draw()
     player()
-    if win(filled, 'X'):
-        draw(filled)
-        print('You Win! :)')
+
+    # check board and output accordingly
+    if win('X'):
+        draw()
+        print('\nYou Win! :)')
         file = open('Board.txt', 'a')
         file.write(input('Enter Your Name: ') + ' Won in TicTacToe\n')
         file.close()
         break
-    elif full(filled):
-        draw(filled)
-        print('Tie')
+    elif full():
+        draw()
+        print('\nTie')
         break
 
+    # run cpu turn
     cpu()
-    draw(filled)
 
-    if win(filled, 'O'):
-        print('Game Over! :(')
+    # check board and output accordingly
+    if win('O'):
+        draw()
+        print('\nGame Over! :(')
         break
-    elif full(filled):
-        print('Tie')
+    elif full():
+        draw()
+        print('\nTie')
         break
 
+# closing statement
 print('Thanks for playing!')

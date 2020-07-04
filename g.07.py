@@ -3,41 +3,30 @@
 # full text matching game
 # multiple size possible
 
-import random
+from random import randint
 import math
 
 # symbols contains all possible icons
 symbols = ['X', 'X', 'O', 'O', 'J', 'J', '=', '=', '+', '+', '#', '#', '@', '@', '*', '*', '!', '!',
            '~', '~', '^', '^', '&', '&', '$', '$', '%', '%', '|', '|', '.', '.', '/', '/', '"', '"']
 
-# index1 and index2 serve multiple purposes and correct holds number of matches
-index1 = 0
-index2 = 0
-correct = 0
+# initialize indexes, solutions, the board, and the size (size can be 4, 16, or 36)
+index1, index2, correct, solution, board, size = 0, 0, 0, [], [], 16
 
-# solution contains icons and board is the blank cover
-solution = []
-board = []
-
-# size controls the size of the board, can be set to 4, 16, or 36
-size = 36
-
+# set solution according to size
 while True:
-    # sets solution according to size
-    index = random.randint(0, size - 1)
+    index = randint(0, size - 1)
     if symbols[index] != ' ':
         solution.append(symbols[index])
         symbols[index] = ' '
+        board.append('-')
     if len(solution) == size:
         break
 
-for i in range(size):
-    # sets board according to size
-    board.append('-')
-
 
 def draw(i1, i2):
-    # draws board according to given indexes
+    """draws board according to given indexes"""
+
     pos = 0
     if i1 >= 0:
         board[i1] = solution[i1]
@@ -53,11 +42,9 @@ def draw(i1, i2):
 
 
 # introduction
-print('')
-print('Welcome to Matching!')
-print('You must guess all', int(size / 2), 'pairs')
-print('The board is numbered as:')
-print('')
+print('\nWelcome to Matching!'
+      '\nYou must guess all', int(size / 2), 'pairs'
+      '\nThe board is numbered as:\n')
 index1 = 0
 for index2 in range(int(math.sqrt(size))):
     for correct in range(int(math.sqrt(size))):
@@ -69,14 +56,17 @@ for index2 in range(int(math.sqrt(size))):
     print('')
 correct = 0
 
+# run through the game
 while True:
-    # runs through the game
-    print('-' * 100)
+    # draw the board and run the player turn
+    print('\n')
     draw(-1, -1)
     index1 = int(input('Card 1: '))
     draw(index1, -1)
     index2 = int(input('Card 2: '))
     draw(index1, index2)
+
+    # check for solutions and output accordingly
     if solution[index1] == solution[index2]:
         board[index1] = ' '
         board[index2] = ' '
@@ -84,6 +74,8 @@ while True:
         print('Match!')
     else:
         print('No Match!')
+
+    # check for a win and output accordingly
     if correct == size / 2:
         print('\nYou Win! :)')
         file = open('Board.txt', 'a')
@@ -91,4 +83,5 @@ while True:
         file.close()
         break
 
+# closing statement
 print('Thanks for playing!')

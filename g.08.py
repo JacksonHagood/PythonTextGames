@@ -3,15 +3,16 @@
 # full text rock paper scissors game
 # ai is completely random
 
-import random
+from random import randint
 
-# won holds the amount of wins the player holds
+# initialize win
 won = 0
 
 
 def cpu():
-    # calculates the computer's turn
-    choice = random.randint(0, 2)
+    """generates the computer's turn"""
+
+    choice = randint(0, 2)
     if choice == 0:
         return 'ROCK'
     elif choice == 1:
@@ -21,7 +22,8 @@ def cpu():
 
 
 def check(p, c):
-    # returns the winner
+    """returns the winner"""
+
     if p == 'ROCK' and c == 'SCISSORS':
         return 'p'
     elif p == 'SCISSORS' and c == 'PAPER':
@@ -34,29 +36,30 @@ def check(p, c):
 
 
 # introduction
-print('')
-print('Welcome to Rock Paper Scissors!')
-print('You will play until you lose')
-print('Play "rock", "paper" or "scissors"')
-print('')
+print('\nWelcome to Rock Paper Scissors!'
+      '\nYou will play until you lose'
+      '\nPlay "rock", "paper" or "scissors"\n')
 
+# run through the game
 while True:
-    # runs through the game
+    # run the player turn and generate a cpu turn
     player = input('Your Move: ').upper()
     computer = cpu()
+
+    # output the turn and indicate the winner
     if check(player, computer) == 'p':
         print(player.lower(), 'beats', computer.lower())
-        print('You Win! :)')
+        print('You Win! :)\n')
         won += 1
     elif check(player, computer) == 't':
         print('both played', player.lower())
-        print('Tie')
+        print('Tie\n')
     else:
         print(computer.lower(), 'beats', player.lower())
         print('Game Over! :(')
         break
-    print('-' * 100)
 
+# output and closing statement
 print('\nYou won', won, 'times')
 file = open('Board.txt', 'a')
 file.write(input('Enter Your Name: ') + ' Won in Rock Paper Scissors ' + str(won) + ' times\n')

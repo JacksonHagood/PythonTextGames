@@ -3,43 +3,43 @@
 # full text scramble
 # all solutions are python related
 
-import random
+from random import randint, shuffle
 
-# set possible solutions, the solution, and the scrambled answer
+# set the number of lives and possible solutions
+lives = 5
 words = ['python', 'programming', 'variable', 'integer', 'float', 'complex', 'string', 'boolean',
          'list', 'set', 'tuple', 'dictionary', 'immutable', 'index', 'condition', 'iterator',
          'import', 'math', 'random', 'function', 'define', 'return', 'casting', 'print', 'input',
          'append', 'commenting', 'operators', 'and', 'or', 'not', 'is', 'in', 'jackson', 'hagood']
 
-word = words[random.randint(0, len(words) - 1)]
-
-solution = list(word)
-random.shuffle(solution)
-
-lives = 10
+# generate the word and translate it into a list that is randomized
+word = words[randint(0, len(words) - 1)]
+answer = list(word)
+shuffle(answer)
 
 
 def draw():
-    # draws the scrambled answer
-    print(lives, 'lives | ', end='')
-    for char in solution:
-        print(char, end='')
+    """draws the scrambled word"""
+
+    print('\n' + str(lives), 'lives | ', end='')
+    for c in answer:
+        print(c, end='')
     print('')
 
 
 # introduction
-print('')
-print('Welcome to Scramble!')
-print('You must guess the word')
-print('You have 10 lives')
-print('')
+print('\nWelcome to Scramble!'
+      '\nYou must guess the word'
+      '\nYou have 5 lives')
 
+# run through the game
 while True:
-    # runs through the game
+    # draw board and run player turn
     draw()
     guess = input('Your Guess: ')
     lives -= 1
 
+    # check for a loss or win and output accordingly
     if guess == word:
         print('\nYou Win! :)')
         file = open('Board.txt', 'a')
@@ -51,4 +51,5 @@ while True:
         print('The answer was', '"' + word + '"')
         break
 
+# closing statement
 print('Thanks for playing!')

@@ -15,8 +15,7 @@ for row in range(6):
 
 def draw():
     # draws the current board according to filled slots
-    print('-' * 50)
-    print('+-0-+-1-+-2-+-3-+-4-+-5-+-6-+')
+    print('\n+-0-+-1-+-2-+-3-+-4-+-5-+-6-+')
     for i in range(6):
         for j in range(7):
             print('| ' + board[i][j] + ' ', end='')
@@ -26,7 +25,7 @@ def draw():
 
 def player():
     # runs the players turn
-    slot = int(input('Your move: '))
+    slot = int(input('\nYour move: '))
     if board[0][slot] == ' ':
         for i in range(6):
             if board[i][slot] != ' ':
@@ -97,12 +96,10 @@ def win(s):
 
 
 # introduction
-print('')
-print('Welcome to Connect Four!')
-print('You are X, the CPU is O')
-print('columns are numbered 0 - 6')
-print('get 4 in any direction')
-print('')
+print('\nWelcome to Connect Four!'
+      '\nYou are X, the CPU is O'
+      '\nSlots are numbered 0 - 6'
+      '\nGet 4 in any direction')
 
 while True:
     # runs through the game
@@ -112,23 +109,23 @@ while True:
 
     if win('X'):
         draw()
-        print('You Win! :)')
+        print('\nYou Win! :)')
         file = open('Board.txt', 'a')
-        file.write(input('Enter Your Name: ') + ' Won in Connect Four!\n')
+        file.write(input('Enter Your Name: ') + ' Won in Connect Four\n')
         file.close()
         break
     elif full():
-        print('Tie')
+        print('\nTie')
         break
 
     cpu()
 
     if win('O'):
         draw()
-        print('Game Over! :(')
+        print('\nGame Over! :(')
         break
     elif full():
-        print('Tie')
+        print('\nTie')
         break
 
 print('Thanks for playing!')
