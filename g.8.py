@@ -1,4 +1,4 @@
-# game 7
+# game 8
 
 # full text rock paper scissors game
 # ai is completely random

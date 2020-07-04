@@ -1,6 +1,6 @@
-# game 1
+# game 9
 
-# full sticks
+# full text sticks
 # ai is completely random
 
 import random
