@@ -1,0 +1,9 @@
+Jackson Won in TicTacToe
+Jackson Played an Adventure Game
+Jackson Won in Hangman
+Jackson Won in Scramble
+Jackson Won in Word Search
+Jackson Won in Matching
+Jackson Won in Rock Paper Scissors 3 times
+Jackson Won in Sticks
+Jackson Played Yahtzee! with a final score of 245
