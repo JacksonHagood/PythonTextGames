@@ -1,9 +1,0 @@
-Jackson Won in TicTacToe
-Jackson Played an Adventure Game
-Jackson Won in Hangman
-Jackson Won in Scramble
-Jackson Won in Word Search
-Jackson Won in Matching
-Jackson Won in TicTacToe
-Jackson Won in TicTacToe
-Jackson Won in Sticks
